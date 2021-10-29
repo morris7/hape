@@ -5,6 +5,9 @@ class EndScene extends Phaser.Scene {
     this.finalScore= 0;
 	}
 
+  preload(){
+    this.load.image('background', 'assets/hapebeastBg.png');
+  }
   endScene () {
 
   };
@@ -15,6 +18,7 @@ class EndScene extends Phaser.Scene {
   };
 
   create() {
+    this.add.image(400, 300, 'background');
     this.cameras.main.fadeIn(2000, 0, 0, 0)
     
     this.add.text(250,250, 'GAME OVER!',  { fontSize: '26px', fill: '#fff' });
