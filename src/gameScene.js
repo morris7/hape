@@ -23,14 +23,14 @@ class GameScene extends Phaser.Scene {
     this.load.image('ground', 'assets/platform.png');
     this.load.image('coin', 'assets/coin.png');
     this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude2', 'assets/dude2.png', { frameWidth: 64, frameHeight: 100 });
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 64, frameHeight: 86 });
 
 
 
     //  Firefox doesn't support mp3 files, so use ogg
-    this.load.audio('bgMusic', ['assets/bgMusic.mp3', 'assets/bgMusic.ogg'] );
-    this.load.audio('goodHit', ['assets/laser.mp3'] );
-    this.load.audio('loseSound', ['assets/lose.mp3'] );
+    this.load.audio('bgMusic', ['assets/bgMusic.mp3'] );
+    this.load.audio('goodHit', ['assets/coin.mp3'] );
+    this.load.audio('loseSound', ['assets/playerDeath.mp3'] );
 
 }
 
@@ -44,10 +44,11 @@ create() {
 
     // Play music
     this.music = this.sound.add('bgMusic');
+    this.music.loop = true;
     this.music.play({volume: 0.5});
 
     this.goodHit = this.sound.add('goodHit');
-    this.loseSound = this.sound.add('loseSound');
+    this.loseSound = this.sound.add('loseSound', { volume: 8 });
 
 
 
@@ -61,7 +62,7 @@ create() {
     this.platforms.create(750, 220, 'ground');
 
     // The this.player and i = null;
-    this.player = this.physics.add.sprite(100, 450, 'dude2');
+    this.player = this.physics.add.sprite(100, 450, 'dude');
 
     //  Player physics properties. Give the little guy a slight bounce.
     this.player.setBounce(0.2);
@@ -70,20 +71,20 @@ create() {
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude2', { coint: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
         key: 'turn',
-        frames: [ { key: 'dude2', frame: 4 } ],
+        frames: [ { key: 'dude', frame: 4 } ],
         frameRate: 20
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude2', { coint: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
         frameRate: 10,
         repeat: -1
     });
@@ -155,7 +156,7 @@ create() {
 
   end() {}
 
-hitBomb(player, bomb) {
+hitBomb() {
 
   this.music.pause();
   this.loseSound.play({volume: 2});
@@ -166,17 +167,17 @@ hitBomb(player, bomb) {
   this.player.anims.play('turn');
 
   this.cameras.main.fadeOut(1000, 0, 0, 0);
-  
+
   setTimeout(() => {
-    this.scene.start('endScene', {scoreText: this.score}).bind(this)
+    this.scene.start('endScene', {scoreText: this.score})
   }, 1000);
 
 }
 
   collectcoin(player, coin){
-    
+    // this.hitBomb();
     coin.disableBody(true, true);
-    this.goodHit.play();
+    this.goodHit.play({ volume: 0.2 });
 
     //  Add and update the score
     this.score += 0.1;

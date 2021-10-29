@@ -16,12 +16,16 @@ class EndScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.fadeIn(2000, 0, 0, 0)
-    var text = this.add.text(250,250, 'GAME OVER!',  { fontSize: '22px', fill: '#fff' });
-    text.setInteractive({ useHandCursor: true });
+    
+    this.add.text(250,250, 'GAME OVER!',  { fontSize: '26px', fill: '#fff' });
 
-    this.add.text(250,280, `FINAL SCORE: ${this.finalScore}ETH`,  { fontSize: '22px', fill: '#fff' });
+    this.add.text(250,280, `FINAL SCORE: ${this.finalScore} ETH 🚀`,  { fontSize: '22px', fill: '#fff' });
+    
+    var retry = this.add.text(250, 350, 'Play Again',  { fontSize: '22px', fill: '#fff' })
+    retry.setInteractive({ useHandCursor: true });
+    retry.on('pointerdown', () => this.clickButton());
 
-    text.on('pointerdown', () => this.clickButton());
+    // this.scene.input.keyboard.on('keydown-' + 'ENTER', () => {this.clickButton()})
   };
 
   clickButton() {
