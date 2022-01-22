@@ -23,7 +23,7 @@ class GameScene extends Phaser.Scene {
     this.load.image('ground', 'assets/platform.png');
     this.load.image('coin', 'assets/coin.png');
     this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 64, frameHeight: 86 });
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 60, frameHeight: 86 });
 
 
 
@@ -109,8 +109,8 @@ create() {
     this.bombs = this.physics.add.group();
 
     //  The score
-    this.creatorText = this.add.text(10, 10, 'created by momomorris', { fontSize: '12px', fill: '#fff' });
-    this.scoreText = this.add.text(10, 25, 'SCORE: 0 ETH', { fontSize: '18px', fill: '#fff' });
+    this.creatorText = this.add.text(10, 10, 'created by momomorris', { fontSize: '12px', fill: '#898B97' });
+    this.scoreText = this.add.text(10, 25, 'SCORE: 0 ETH', { fontSize: '18px', fill: '#898B97' });
 
     //  Collide the player and the coins with the platforms
     this.physics.add.collider(this.player, this.platforms);
@@ -162,7 +162,7 @@ hitBomb() {
   this.loseSound.play({volume: 2});
   this.physics.pause();
 
-  this.player.setTint(0xff0000);
+  this.player.setTint(0x898B97);
   
   this.player.anims.play('turn');
 

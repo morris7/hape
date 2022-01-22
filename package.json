@@ -2,9 +2,9 @@
   "dependencies": {
     "http-server": "^14.0.0"
   },
-  "name": "hapebeasts",
+  "name": "peekaboo",
   "version": "1.0.0",
-  "description": "hapebeasts game",
+  "description": "peekaboo game",
   "main": "index.js",
   "scripts": {
     "start": "http-server ./src",
